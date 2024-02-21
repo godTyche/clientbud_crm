@@ -1,0 +1,131 @@
+<?php
+
+namespace App\Notifications;
+
+use App\Models\EmailNotificationSetting;
+use App\Models\Task;
+use Illuminate\Notifications\Messages\SlackMessage;
+use NotificationChannels\OneSignal\OneSignalChannel;
+use NotificationChannels\OneSignal\OneSignalMessage;
+
+class TaskNote extends BaseNotification
+{
+
+
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    private $task;
+    private $created_at;
+    private $emailSetting;
+
+    public function __construct(Task $task, $created_at)
+    {
+        $this->task = $task;
+        $this->created_at = $created_at;
+        $this->company = $this->task->company;
+        $this->emailSetting = EmailNotificationSetting::where('company_id', $this->company->id)->where('slug', 'task-mention-notification')->first();
+
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param mixed $notifiable
+     * @return array
+     */
+    public function via($notifiable)
+    {
+        $via = ['database'];
+
+        if ($this->emailSetting->send_email == 'yes' && $notifiable->email_notifications && $notifiable->email != '') {
+            array_push($via, 'mail');
+        }
+
+        if ($this->emailSetting->send_slack == 'yes' && $this->company->slackSetting->status == 'active') {
+            array_push($via, 'slack');
+        }
+
+        if ($this->emailSetting->send_push == 'yes') {
+            array_push($via, OneSignalChannel::class);
+        }
+
+        return $via;
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        $build = parent::build();
+        $url = route('tasks.show', [$this->task->id, 'view' => 'notes']);
+        $url = getDomainSpecificUrl($url, $this->company);
+
+        $projectName = (!is_null($this->task->project)) ? __('app.project') . ' - ' . $this->task->project->project_name : '';
+
+        $content = __('email.taskNote.subject') . ' - ' . $this->task->heading . ' #' . $this->task->task_short_code . '<br>' . $projectName;
+
+        return $build
+            ->subject(__('email.taskNote.subject') . ' #' . $this->task->task_short_code . ' - ' . config('app.name') . '.')
+            ->markdown(
+                'mail.email', [
+                    'url' => $url,
+                    'content' => $content,
+                    'themeColor' => $this->company->header_color,
+                    'actionText' => __('email.taskNote.action'),
+                    'notifiableName' => $notifiable->name
+                ]
+            );
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return array
+     */
+    //phpcs:ignore
+    public function toArray($notifiable)
+    {
+        return [
+            'id' => $this->task->id,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'heading' => $this->task->heading
+        ];
+    }
+
+    /**
+     * Get the Slack representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return SlackMessage
+     */
+    public function toSlack($notifiable)
+    {
+        $slack = $notifiable->company->slackSetting;
+
+        if (count($notifiable->employee) > 0 && (!is_null($notifiable->employee[0]->slack_username) && ($notifiable->employee[0]->slack_username != ''))) {
+            return (new SlackMessage())
+                ->from(config('app.name'))
+                ->image($slack->slack_logo_url)
+                ->to('@' . $notifiable->employee[0]->slack_username)
+                ->content('*' . __('email.taskNote.subject') . '*' . "\n" . $this->task->heading . "\n" . ' #' . $this->task->task_short_code);
+        }
+
+    }
+
+    // phpcs:ignore
+    public function toOneSignal($notifiable)
+    {
+        return OneSignalMessage::create()
+            ->setSubject(__('email.taskNote.subject'))
+            ->setBody($this->task->heading . ' ' . __('email.taskNote.subject'));
+    }
+
+}
