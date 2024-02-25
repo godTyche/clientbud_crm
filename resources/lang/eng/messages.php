@@ -470,5 +470,6 @@ return array(
     'totalDealWidget' => 'Link will show default pipeline deals.',
     'clientSignUpDisabledByAdmin' => 'Client sign up is disabled by admin.',
     'cantAddFollowup' => 'You can not add followup. If deal is win or lost.',
-    'lowerValue'=> 'Enter lower value than'
+    'lowerValue'=> 'Enter lower value than',
+    'sendEmailSuccess' => 'Email has been sent successfully',
 );

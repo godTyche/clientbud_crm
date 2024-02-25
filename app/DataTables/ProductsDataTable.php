@@ -88,7 +88,7 @@ class ProductsDataTable extends BaseDataTable
         });
 
 
-        $datatables->editColumn('name', function ($row) {
+        $datatables->addColumn('name', function ($row) {
 
             return '<a href="' . route('products.show', [$row->id]) . '" class="openRightModal text-darkest-grey" >' . $row->name . '</a>';
         });

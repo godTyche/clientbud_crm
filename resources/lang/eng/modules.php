@@ -2156,4 +2156,13 @@ return array(
         'totalDealAmount' => 'Total Deal Amount',
         'leadContactEmail' => 'Lead Contact Email',
     ),
+    'emailMarketing' => array(
+        'addEmail' => 'Add Email Template',
+        'editEmail' => 'Edit Email Template',
+        'content' => 'Email Template Content',
+        'emailDetail' => 'Email Template Detail',
+        'sendEmail' => 'Send Email',
+        'emailTo' => 'To',
+        'emailCC' => 'CC',
+    )
 );

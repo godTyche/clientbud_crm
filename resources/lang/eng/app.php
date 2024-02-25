@@ -241,6 +241,7 @@ return array(
         'attrition' => 'Attrition',
         'contracts' => 'Contracts',
         'estimate' => 'Estimate',
+        'emailMarketing' => 'Email Marketing',
 
         'projectCalendar' => 'Project Calendar',
         'customLink' => 'Custom Link',

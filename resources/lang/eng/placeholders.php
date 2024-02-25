@@ -174,4 +174,9 @@ return array(
         'languageCode' => 'e.g. en',
     ),
     'gst/vat' => 'e.g. GST/VAT',
+    'emailMarketing' => array(
+        'title' => 'Enter an email template title',
+        'subject' => 'Enter an email subject',
+        'emailTo' => 'john@gmail.com',
+    )
 );

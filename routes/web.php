@@ -118,6 +118,7 @@ use App\Http\Controllers\ProjectTemplateSubTaskController;
 use App\Http\Controllers\EmployeeShiftChangeRequestController;
 use App\Http\Controllers\LeadContactController;
 use App\Http\Controllers\PipelineController;
+use App\Http\Controllers\EmailMarketingController;
 
 Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
     Route::post('image/upload', [ImageController::class, 'store'])->name('image.store');
@@ -783,5 +784,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
 
     Route::get('quickbooks/{hash}/callback', [QuickbookController::class, 'callback'])->name('quickbooks.callback');
     Route::get('quickbooks', [QuickbookController::class, 'index'])->name('quickbooks.index');
+
+    // Email Marketing
+    Route::resource('email-marketing', EmailMarketingController::class);
+    Route::post('email-marketing/{id}/update', [EmailMarketingController::class, 'update'])->name('email-marketing.update');
+    Route::get('email-marketing/{id}/compose', [EmailMarketingController::class, 'compose'])->name('email-marketing.compose');
+    Route::post('email-marketing/sendEmail', [EmailMarketingController::class, 'sendEmail'])->name('email-marketing.sendEmail');
 
 });
