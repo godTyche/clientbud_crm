@@ -205,7 +205,7 @@
             ]
         }).then(editor => {
             htmlContent = $('#content').text();
-            editor.setData(decodeURIComponent(htmlContent));
+            editor.setData(htmlContent);
             ckEditorInstance = editor;
         });
 
