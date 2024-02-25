@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helper\Reply;
+use App\Helper\Files;
 use App\Models\EmailMarketing;
+use App\Models\EmailMarketingImage;
 use App\Mail\EmailMarketingMail;
 use App\DataTables\EmailMarketingDataTable;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 
 class EmailMarketingController extends AccountBaseController
@@ -57,8 +60,9 @@ class EmailMarketingController extends AccountBaseController
         //
         $emailMarketing = new EmailMarketing();
         $emailMarketing->title = $request->title;
-        $emailMarketing->content = urldecode($request->content);
         $emailMarketing->addedBy = user()->id;
+        $emailMarketing->content = urldecode($request->content);
+
         $emailMarketing->save();
 
         $redirectUrl = urldecode($request->redirect_url);
@@ -129,6 +133,7 @@ class EmailMarketingController extends AccountBaseController
         $emailMarketing = EmailMarketing::findOrFail($id);
         $emailMarketing->title = $request->title;
         $emailMarketing->content = urldecode($request->content);
+
         $emailMarketing->save();
 
         $redirectUrl = urldecode($request->redirect_url);
@@ -178,8 +183,29 @@ class EmailMarketingController extends AccountBaseController
         $subject = $request->subject;
         $emailTo = $request->emailTo;
         $content = urldecode($request->content);
-        
-        Mail::to($emailTo)->send(new EmailMarketingMail($subject, $content, company()));
+
+        $pattern = '/src="data:image\/[^;]+;base64,([^"]+)"/';
+        $htmlWithUrls= preg_replace_callback($pattern, function ($matches) {
+            $base64String = $matches[1];
+
+            $decodedData = base64_decode($base64String);
+
+            // Generate a unique filename
+            $filename = uniqid('image_') . '.png';
+
+            // Specify the path where you want to save the image
+            $path = public_path(Files::UPLOAD_FOLDER . '/email-marketing');
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0775, true);
+            }
+            $path = $path . '/' . $filename;
+            // Save the image file
+            file_put_contents($path, $decodedData);
+
+            return 'src="' . asset('user-uploads/email-marketing/'. $filename) . '"';
+        }, $content);
+
+        Mail::to($emailTo)->send(new EmailMarketingMail($subject, $htmlWithUrls, company()));
         return Reply::successWithData(__('messages.sendEmailSuccess'), ['redirectUrl' => route('email-marketing.index')]);
     }
 }

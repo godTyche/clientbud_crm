@@ -212,7 +212,7 @@
 
         $('#save-email-template').click(function() {
             const htmlContent = ckEditorInstance.getData();
-            $('#content').text(htmlContent);
+            $('#content').text(encodeURIComponent(htmlContent));
 
             const url = "{{ route('email-marketing.update', [$emailTemplate->id]) }}";
 
