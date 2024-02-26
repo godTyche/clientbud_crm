@@ -39,7 +39,7 @@ class EmailMarketingMail extends Mailable implements ShouldQueue
     {
 
         return $this->subject($this->subject)
-            ->markdown('mail.email', [
+            ->markdown('mail.email-marketing', [
                 'content' => $this->content,
             ]);
     }

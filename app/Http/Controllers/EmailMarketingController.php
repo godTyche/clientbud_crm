@@ -205,10 +205,7 @@ class EmailMarketingController extends AccountBaseController
             return 'src="' . asset('user-uploads/email-marketing/'. $filename) . '"';
         }, $content);
         $pattern = '/style="aspect-ratio:(\d+)\/(\d+);"/';
-        $content = preg_replace_callback($pattern, function($matches) {
-            $width = $matches[1];
-            return 'style="width:' . $width . 'px;"';
-        }, $content);
+        $htmlWithUrls = preg_replace('/<img(.*?)height=["\'](.*?)["\'](.*?)>/i', '<img$1$3>', $htmlWithUrls);
 
         Mail::to($emailTo)->send(new EmailMarketingMail($subject, $htmlWithUrls, company()));
         return Reply::successWithData(__('messages.sendEmailSuccess'), ['redirectUrl' => route('email-marketing.index')]);
