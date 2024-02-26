@@ -119,6 +119,7 @@ use App\Http\Controllers\EmployeeShiftChangeRequestController;
 use App\Http\Controllers\LeadContactController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\EmailMarketingController;
+use App\Http\Controllers\ResourceCenterController;
 
 Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
     Route::post('image/upload', [ImageController::class, 'store'])->name('image.store');
@@ -791,4 +792,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
     Route::get('email-marketing/{id}/compose', [EmailMarketingController::class, 'compose'])->name('email-marketing.compose');
     Route::post('email-marketing/sendEmail', [EmailMarketingController::class, 'sendEmail'])->name('email-marketing.sendEmail');
 
+    // Resource Center
+    Route::resource('resource-center', ResourceCenterController::class);
+    Route::post('resource-center/{id}/update', [ResourceCenterController::class, 'update'])->name('resource-center.update');
 });

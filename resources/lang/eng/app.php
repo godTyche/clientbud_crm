@@ -242,6 +242,7 @@ return array(
         'contracts' => 'Contracts',
         'estimate' => 'Estimate',
         'emailMarketing' => 'Email Marketing',
+        'resourceCenter' => 'Resource Center',
 
         'projectCalendar' => 'Project Calendar',
         'customLink' => 'Custom Link',

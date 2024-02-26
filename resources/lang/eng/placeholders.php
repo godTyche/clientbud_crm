@@ -178,5 +178,10 @@ return array(
         'title' => 'Enter an email template title',
         'subject' => 'Enter an email subject',
         'emailTo' => 'john@gmail.com',
+    ),
+    'resourceCenter' => array(
+        'url' => 'https://www.example.com',
+        'icon' => '<i class="fa fa-globe"></i>',
+        'colour' => '#000000',
     )
 );
