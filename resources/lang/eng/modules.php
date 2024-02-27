@@ -1429,7 +1429,7 @@ return array(
         'password' => 'Password',
         'passwordNote' => 'Client will login using this password.',
         'passwordUpdateNote' => 'Client will login using this password. (Leave blank to keep current password)',
-        'mobile' => 'Mobile',
+        'mobile' => 'Phone Number',
         'updateTitle' => 'Update Lead Info',
         'addNewLead' => 'Add New Lead',
         'viewDetails' => 'View Details',

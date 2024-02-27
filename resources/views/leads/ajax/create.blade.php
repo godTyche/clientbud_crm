@@ -48,10 +48,6 @@ $addProductPermission = user()->permission('add_product');
                         <x-forms.label class="my-3" fieldId="value" :fieldLabel="__('modules.deal.dealValue')" fieldRequired="true">
                         </x-forms.label>
                         <x-forms.input-group>
-                            <x-slot name="prepend">
-                                <span
-                                    class="input-group-text f-14">{{company()->currency->currency_code }} ({{ company()->currency->currency_symbol }})</span>
-                            </x-slot>
                             <input type="number" name="value" id="value" class="form-control height-35 f-14" value="0"/>
                         </x-forms.input-group>
                     </div>

@@ -104,31 +104,27 @@ $addProductPermission = user()->permission('add_product');
                             fieldId="company_name" :fieldPlaceholder="__('placeholders.company')" />
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <x-forms.text :fieldLabel="__('modules.lead.website')" fieldName="website" fieldId="website"
                             :fieldPlaceholder="__('placeholders.website')" />
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-3 col-md-6">
                         <x-forms.tel fieldId="mobile" :fieldLabel="__('modules.lead.mobile')" fieldName="mobile"
                            :fieldPlaceholder="__('placeholders.mobile')"></x-forms.tel>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <x-forms.text :fieldLabel="__('modules.client.officePhoneNumber')" fieldName="office"
                             fieldId="office" fieldPlaceholder="" />
-                    </div>
+                    </div> -->
 
-                    <div class="col-lg-3 col-md-6">
-                        <x-forms.select fieldId="country" :fieldLabel="__('app.country')" fieldName="country"
-                            search="true">
-                            <option value="">--</option>
-                            @foreach ($countries as $item)
-                                <option data-tokens="{{ $item->iso3 }}"
-                                    data-content="<span class='flag-icon flag-icon-{{ strtolower($item->iso) }} flag-icon-squared'></span> {{ $item->nicename }}"
-                                    value="{{ $item->nicename }}">{{ $item->nicename }}</option>
-                            @endforeach
-                        </x-forms.select>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group my-3">
+                            <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2" :fieldLabel="__('app.address')"
+                                fieldName="address" fieldId="address" :fieldPlaceholder="__('placeholders.address')">
+                            </x-forms.textarea>
+                        </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6">
@@ -145,12 +141,16 @@ $addProductPermission = user()->permission('add_product');
                         <x-forms.text :fieldLabel="__('modules.stripeCustomerAddress.postalCode')"
                             fieldName="postal_code" fieldId="postal_code" :fieldPlaceholder="__('placeholders.postalCode')" />
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group my-3">
-                            <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2" :fieldLabel="__('app.address')"
-                                fieldName="address" fieldId="address" :fieldPlaceholder="__('placeholders.address')">
-                            </x-forms.textarea>
-                        </div>
+                    <div class="col-lg-3 col-md-6">
+                        <x-forms.select fieldId="country" :fieldLabel="__('app.country')" fieldName="country"
+                            search="true">
+                            <option value="">--</option>
+                            @foreach ($countries as $item)
+                                <option data-tokens="{{ $item->iso3 }}"
+                                    data-content="<span class='flag-icon flag-icon-{{ strtolower($item->iso) }} flag-icon-squared'></span> {{ $item->nicename }}"
+                                    value="{{ $item->nicename }}" @if($item->nicename == 'United States') selected @endif>{{ $item->nicename }}</option>
+                            @endforeach
+                        </x-forms.select>
                     </div>
 
                     <x-forms.custom-field :fields="$fields" class="col-md-12"></x-forms.custom-field>

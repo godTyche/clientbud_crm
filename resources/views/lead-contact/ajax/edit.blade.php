@@ -104,31 +104,28 @@ $addProductPermission = user()->permission('add_product');
                             :fieldValue="$leadContact->company_name" />
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <x-forms.text :fieldLabel="__('modules.lead.website')" fieldName="website" fieldId="website"
                             :fieldPlaceholder="__('placeholders.website')" :fieldValue="$leadContact->website" />
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-3 col-md-6">
                         <x-forms.tel fieldId="mobile" :fieldLabel="__('modules.lead.mobile')" fieldName="mobile"
                            :fieldPlaceholder="__('placeholders.mobile')" :fieldValue="$leadContact->mobile"></x-forms.tel>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <x-forms.text :fieldLabel="__('modules.client.officePhoneNumber')" fieldName="office"
                             fieldId="office" fieldPlaceholder="" :fieldValue="$leadContact->office" />
-                    </div>
+                    </div> -->
 
-                    <div class="col-lg-3 col-md-6">
-                        <x-forms.select fieldId="country" :fieldLabel="__('app.country')" fieldName="country"
-                            search="true">
-                            <option value="">--</option>
-                            @foreach ($countries as $item)
-                                <option @if ($leadContact->country == $item->nicename) selected @endif data-tokens="{{ $item->iso3 }}"
-                                    data-content="<span class='flag-icon flag-icon-{{ strtolower($item->iso) }} flag-icon-squared'></span> {{ $item->nicename }}"
-                                    value="{{ $item->nicename }}">{{ $item->nicename }}</option>
-                            @endforeach
-                        </x-forms.select>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group my-3">
+                            <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2" :fieldLabel="__('app.address')"
+                                fieldName="address" fieldId="address" :fieldPlaceholder="__('placeholders.address')"
+                                :fieldValue="$leadContact->address">
+                            </x-forms.textarea>
+                        </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6">
@@ -147,13 +144,16 @@ $addProductPermission = user()->permission('add_product');
                             :fieldValue="$leadContact->postal_code" />
                     </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group my-3">
-                            <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2" :fieldLabel="__('app.address')"
-                                fieldName="address" fieldId="address" :fieldPlaceholder="__('placeholders.address')"
-                                :fieldValue="$leadContact->address">
-                            </x-forms.textarea>
-                        </div>
+                    <div class="col-lg-3 col-md-6">
+                        <x-forms.select fieldId="country" :fieldLabel="__('app.country')" fieldName="country"
+                            search="true">
+                            <option value="">--</option>
+                            @foreach ($countries as $item)
+                                <option @if ($leadContact->country == $item->nicename) selected @endif data-tokens="{{ $item->iso3 }}"
+                                    data-content="<span class='flag-icon flag-icon-{{ strtolower($item->iso) }} flag-icon-squared'></span> {{ $item->nicename }}"
+                                    value="{{ $item->nicename }}">{{ $item->nicename }}</option>
+                            @endforeach
+                        </x-forms.select>
                     </div>
                 </div>
 

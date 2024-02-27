@@ -80,10 +80,6 @@ $addProductPermission = user()->permission('add_product');
                         <x-forms.label fieldId="value" :fieldLabel="__('modules.deal.dealValue')">
                         </x-forms.label>
                         <x-forms.input-group>
-                            <x-slot name="prepend">
-                                <span
-                                    class="input-group-text f-14">{{!is_null($deal->currency_id) ? $deal->currency->currency_code : company()->currency->currency_code}} ( {{ !is_null($deal->currency_id) ? $deal->currency->currency_symbol : company()->currency->currency_symbol }} )</span>
-                            </x-slot>
                             <input type="number" name="value" id="value" class="form-control height-35 f-14" value="{{$deal->value}}"/>
                         </x-forms.input-group>
                     </div>

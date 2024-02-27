@@ -68,7 +68,7 @@ $addPermission = user()->permission('add_clients');
                                     @foreach ($countries as $item)
                                     <option data-tokens="{{ $item->iso3 }}" data-phonecode = "{{$item->phonecode}}"
                                         data-content="<span class='flag-icon flag-icon-{{ strtolower($item->iso) }} flag-icon-squared'></span> {{ $item->nicename }}"
-                                        @selected(isset($lead) && $item->nicename == $lead->country)
+                                        @selected((isset($lead) && $item->nicename == $lead->country) || (!isset($lead) && $item->nicename == 'United States'))
                                         value="{{ $item->id }}">{{ $item->nicename }}</option>
                                 @endforeach
                                 </x-forms.select>
@@ -85,7 +85,7 @@ $addPermission = user()->permission('add_clients');
                                         @foreach ($countries as $item)
                                             <option data-tokens="{{ $item->name }}"
                                                     data-content="{{$item->flagSpanCountryCode()}}"
-                                                    @selected(isset($lead) && $item->nicename == $lead->country)
+                                                    @selected((isset($lead) && $item->nicename == $lead->country) || (!isset($lead) && $item->nicename == 'United States'))
                                                     value="{{ $item->phonecode }}">{{ $item->phonecode }}
                                             </option>
                                         @endforeach
@@ -116,7 +116,7 @@ $addPermission = user()->permission('add_clients');
                             fieldName="locale" search="true">
                             @foreach ($languages as $language)
                                 <option {{ user()->locale == $language->language_code ? 'selected' : '' }}
-                                data-content="<span class='flag-icon flag-icon-{{ ($language->flag_code == 'en') ? 'gb' : $language->flag_code }} flag-icon-squared'></span> {{ $language->language_name }}"
+                                data-content="<span class='flag-icon flag-icon-{{ ($language->flag_code == 'en') ? 'us' : $language->flag_code }} flag-icon-squared'></span> {{ $language->language_name }}"
                                 value="{{ $language->language_code }}">{{ $language->language_name }}</option>
                             @endforeach
                         </x-forms.select>
@@ -202,34 +202,36 @@ $addPermission = user()->permission('add_clients');
                     @lang('modules.client.companyDetails')</h4>
                 <div class="row p-20">
                     <div class="col-md-3">
-                        <x-forms.text class="mb-3 mt-3 mt-lg-0 mt-md-0" fieldId="company_name"
+                        <x-forms.text class="mr-0 mr-lg-2 mr-md-2" fieldId="company_name"
                             :fieldLabel="__('modules.client.companyName')" fieldName="company_name"
                             :fieldPlaceholder="__('placeholders.company')" :fieldValue="$lead->company_name ?? ''">
                         </x-forms.text>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <x-forms.text class="mb-3 mt-3 mt-lg-0 mt-md-0" fieldId="website"
                             :fieldLabel="__('modules.client.website')" fieldName="website"
                             :fieldPlaceholder="__('placeholders.website')" :fieldValue="$lead->website ?? ''">
                         </x-forms.text>
-                    </div>
-                    <div class="col-md-3">
+                    </div> -->
+                    <!-- <div class="col-md-3">
                         <x-forms.text class="mb-3 mt-3 mt-lg-0 mt-md-0" fieldId="tax_name"
                             :fieldLabel="__('app.taxName')" fieldName="tax_name"
                             :fieldPlaceholder="__('placeholders.gst/vat')">
                         </x-forms.text>
-                    </div>
-                    <div class="col-md-3">
+                    </div> -->
+                    <!-- <div class="col-md-3">
                         <x-forms.text class="mb-3 mt-3 mt-lg-0 mt-md-0" fieldId="gst_number"
                             :fieldLabel="__('app.gstNumber')" fieldName="gst_number"
                             :fieldPlaceholder="__('placeholders.gstNumber')">
                         </x-forms.text>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-3">
-                        <x-forms.text fieldId="office" :fieldLabel="__('modules.client.officePhoneNumber')"
-                            fieldName="office" :fieldPlaceholder="__('placeholders.mobileWithPlus')" :fieldValue="$lead->office ?? ''">
-                        </x-forms.text>
+                        <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2"
+                            :fieldLabel="__('modules.accountSettings.companyAddress')" fieldName="address"
+                            fieldId="address" :fieldPlaceholder="__('placeholders.address')"
+                            :fieldValue="$lead->address ?? ''">
+                        </x-forms.textarea>
                     </div>
                     <div class="col-md-3">
                         <x-forms.text fieldId="city" :fieldLabel="__('modules.stripeCustomerAddress.city')"
@@ -263,21 +265,19 @@ $addPermission = user()->permission('add_clients');
                     </div>
                     <div class="col-md-6">
                         <div class="form-group my-3">
-                            <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2"
-                                :fieldLabel="__('modules.accountSettings.companyAddress')" fieldName="address"
-                                fieldId="address" :fieldPlaceholder="__('placeholders.address')"
-                                :fieldValue="$lead->address ?? ''">
-                            </x-forms.textarea>
+                            <x-forms.text fieldId="office" :fieldLabel="__('modules.client.officePhoneNumber')"
+                                fieldName="office" :fieldPlaceholder="__('placeholders.mobileWithPlus')" :fieldValue="$lead->office ?? ''">
+                            </x-forms.text>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="form-group my-3">
                             <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2" :fieldLabel="__('app.shippingAddress')"
                                 fieldName="shipping_address" fieldId="shipping_address"
                                 :fieldPlaceholder="__('placeholders.address')" :fieldValue="$lead->address ?? ''">
                             </x-forms.textarea>
                         </div>
-                    </div>
+                    </div> -->
 
                     @if (function_exists('sms_setting') && sms_setting()->telegram_status)
                         <div class="col-md-6">

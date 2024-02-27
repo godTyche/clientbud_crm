@@ -111,7 +111,7 @@ $addClientSubCategoryPermission = user()->permission('manage_client_subcategory'
                             fieldName="locale" search="true">
                             @foreach ($languages as $language)
                                 <option @if ($client->locale == $language->language_code) selected @endif
-                                data-content="<span class='flag-icon flag-icon-{{ ($language->flag_code == 'en') ? 'gb' : $language->flag_code }} flag-icon-squared'></span> {{ $language->language_name }}"
+                                data-content="<span class='flag-icon flag-icon-{{ ($language->flag_code == 'en') ? 'us' : $language->flag_code }} flag-icon-squared'></span> {{ $language->language_name }}"
                                 value="{{ $language->language_code }}">{{ $language->language_name }}</option>
                             @endforeach
                         </x-forms.select>
@@ -216,12 +216,12 @@ $addClientSubCategoryPermission = user()->permission('manage_client_subcategory'
                     @lang('modules.client.companyDetails')</h4>
                 <div class="row p-20">
                     <div class="col-lg-3 col-md-6">
-                        <x-forms.text class="mb-3 mt-3 mt-lg-0 mt-md-0" fieldId="company_name"
+                        <x-forms.text class="mr-0 mr-lg-2 mr-md-2" fieldId="company_name"
                             :fieldLabel="__('modules.client.companyName')" fieldName="company_name"
                             :fieldValue="$client->clientDetails->company_name" :fieldPlaceholder="__('placeholders.company')">
                         </x-forms.text>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <x-forms.text class="mb-3 mt-3 mt-lg-0 mt-md-0" fieldId="website"
                             :fieldLabel="__('modules.client.website')" fieldName="website"
                             :fieldValue="$client->clientDetails->website"
@@ -237,12 +237,14 @@ $addClientSubCategoryPermission = user()->permission('manage_client_subcategory'
                         <x-forms.text class="mb-3 mt-3 mt-lg-0 mt-md-0" fieldId="gst_number"
                             :fieldLabel="__('app.gstNumber')" :fieldValue="$client->clientDetails->gst_number"
                             fieldName="gst_number" :fieldPlaceholder="__('placeholders.gstNumber')"></x-forms.text>
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-3 col-md-6">
-                        <x-forms.text fieldId="office" :fieldLabel="__('modules.client.officePhoneNumber')"
-                            fieldName="office" :fieldPlaceholder="__('placeholders.mobileWithPlus')"
-                            :fieldValue="$client->clientDetails->office"></x-forms.text>
+                        <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2"
+                            :fieldLabel="__('modules.accountSettings.companyAddress')" fieldName="address"
+                            fieldId="address" :fieldPlaceholder="__('placeholders.address')"
+                            :fieldValue="$client->clientDetails->address">
+                        </x-forms.textarea>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <x-forms.text fieldId="city" :fieldLabel="__('modules.stripeCustomerAddress.city')"
@@ -262,11 +264,9 @@ $addClientSubCategoryPermission = user()->permission('manage_client_subcategory'
 
                     <div class="col-md-6">
                         <div class="form-group my-3">
-                            <x-forms.textarea class="mr-0 mr-lg-2 mr-md-2"
-                                :fieldLabel="__('modules.accountSettings.companyAddress')" fieldName="address"
-                                fieldId="address" :fieldPlaceholder="__('placeholders.address')"
-                                :fieldValue="$client->clientDetails->address">
-                            </x-forms.textarea>
+                            <x-forms.text fieldId="office" :fieldLabel="__('modules.client.officePhoneNumber')"
+                                fieldName="office" :fieldPlaceholder="__('placeholders.mobileWithPlus')"
+                                :fieldValue="$client->clientDetails->office"></x-forms.text>
                         </div>
                     </div>
                     <div class="col-md-6">
