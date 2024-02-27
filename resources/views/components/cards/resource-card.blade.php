@@ -15,15 +15,15 @@
         @endphp
 
 @endswitch
-<div class="card sticky-note border">
+<div class="card sticky-note border" style="margin: 5px">
     <div class="card-body text-justify text-wrap">
         <div class="row">
 
-            <div class="col-10">
-                <h3>{{$resourceCard->title}}</h3>
+            <div class="col-10" style="text-align:center; padding:0">
+                <h3 style="text-align:left">{{$resourceCard->title}}</h3>
                 <a href="{{$resourceCard->url}}" target="_blank">{!! nl2br(urldecode($resourceCard->icon)) !!}</a>
             </div>
-            <div class="col-2 text-right">
+            <div class="col-2 text-right" style=" padding:0">
                 <div class="dropdown">
                     <button class="btn btn-lg f-14 px-2 py-0 text-dark-grey text-capitalize rounded  dropdown-toggle"
                         type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -63,8 +63,12 @@ class ResourceCenterController extends AccountBaseController
         $resourceCenter->icon = $request->icon;
         $resourceCenter->colour = $request->colour;
         $resourceCenter->addedBy = user()->id;
-        $resourceCenter->employees = implode(',', $request->employee_id);
-        $resourceCenter->clients = implode(',', $request->client_id);
+        if($request->employee_id) {
+            $resourceCenter->employees = implode(',', $request->employee_id);
+        }
+        if($request->client_id) {
+            $resourceCenter->clients = implode(',', $request->client_id);
+        }
         $resourceCenter->save();
 
         $redirectUrl = urldecode($request->redirect_url);

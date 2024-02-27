@@ -56,7 +56,7 @@ $addOrderPermission = user()->permission('add_order');
                     $clientsAssignee = explode(',', $item->clients);
                 ?>
                 @if(in_array('admin', user()->roles->pluck('name')->toArray()) || in_array(user()->id, $employeesAssignee) || in_array(user()->id, $clientsAssignee))
-                    <div class="col-xl-3 col-md-4">
+                    <div class="col-xl-2 col-lg-3 col-md-4">
                         <x-cards.resource-card :resourceCard="$item" />
                     </div>
                 @endif
