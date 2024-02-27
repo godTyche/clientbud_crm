@@ -22,9 +22,17 @@
                                 <x-forms.text fieldId="subject" :fieldLabel="__('app.subject')" fieldName="subject"
                                               fieldRequired="true" :fieldPlaceholder="__('placeholders.emailMarketing.subject')">
                                 </x-forms.text>
-                                <x-forms.text fieldId="emailTo" :fieldLabel="__('modules.emailMarketing.emailTo')" fieldName="emailTo"
-                                              fieldRequired="true" :fieldPlaceholder="__('placeholders.emailMarketing.emailTo')">
-                                </x-forms.text>
+                                <x-forms.label fieldId="selectAssignee" fieldRequired="true"
+                                    :fieldLabel="__('app.select').' '.__('app.client')">
+                                </x-forms.label>
+                                <x-forms.input-group>
+                                    <select class="form-control multiple-users" multiple name="user_id[]"
+                                        id="selectAssignee2" data-live-search="true" data-size="8">
+                                        @foreach ($clients as $item)
+                                            <x-user-option :user="$item" :pill="true" :additionalText="$item->clientDetails->company_name" />
+                                        @endforeach
+                                    </select>
+                                </x-forms.input-group>
                             </div>
 
                             <div class="col-md-12 mt-3">
@@ -237,6 +245,17 @@
                     }
                 }
             });
+        });
+
+        $("#selectAssignee, #selectAssignee2").selectpicker({
+            actionsBox: true,
+            selectAllText: "{{ __('modules.permission.selectAll') }}",
+            deselectAllText: "{{ __('modules.permission.deselectAll') }}",
+            multipleSeparator: " ",
+            selectedTextFormat: "count > 8",
+            countSelectedText: function(selected, total) {
+                return selected + " {{ __('app.membersSelected') }} ";
+            }
         });
     });
 </script>

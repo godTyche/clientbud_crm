@@ -7,6 +7,7 @@ use App\Helper\Reply;
 use App\Helper\Files;
 use App\Models\EmailMarketing;
 use App\Models\EmailMarketingImage;
+use App\Models\User;
 use App\Mail\EmailMarketingMail;
 use App\DataTables\EmailMarketingDataTable;
 use Illuminate\Support\Facades\File;
@@ -160,6 +161,7 @@ class EmailMarketingController extends AccountBaseController
     public function compose($id)
     {
         $this->emailTemplate = EmailMarketing::findOrFail($id);
+        $this->clients = User::allClients();
 
         $this->pageTitle = __('modules.emailMarketing.sendEmail');
 
@@ -181,7 +183,6 @@ class EmailMarketingController extends AccountBaseController
     public function sendEmail(Request $request)
     {
         $subject = $request->subject;
-        $emailTo = $request->emailTo;
         $content = urldecode($request->content);
 
         $pattern = '/src="data:image\/[^;]+;base64,([^"]+)"/';
@@ -207,7 +208,13 @@ class EmailMarketingController extends AccountBaseController
         $pattern = '/style="aspect-ratio:(\d+)\/(\d+);"/';
         $htmlWithUrls = preg_replace('/<img(.*?)height=["\'](.*?)["\'](.*?)>/i', '<img$1$3>', $htmlWithUrls);
 
-        Mail::to($emailTo)->send(new EmailMarketingMail($subject, $htmlWithUrls, company()));
-        return Reply::successWithData(__('messages.sendEmailSuccess'), ['redirectUrl' => route('email-marketing.index')]);
+        foreach($request->user_id as $userid) {
+            $user = User::findOrFail($userid);
+            $email = $user->email;
+
+            Mail::to($email)->send(new EmailMarketingMail($subject, $htmlWithUrls, company()));
+            return Reply::successWithData(__('messages.sendEmailSuccess'), ['redirectUrl' => route('email-marketing.index')]);
+        }
+
     }
 }
