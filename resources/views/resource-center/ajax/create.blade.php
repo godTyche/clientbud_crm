@@ -33,6 +33,28 @@
                                 <!-- <x-forms.text fieldId="colour" :fieldLabel="__('modules.resourceCenter.colour')" fieldName="colour"
                                               fieldRequired="false" :fieldPlaceholder="__('placeholders.resourceCenter.colour')">
                                 </x-forms.text> -->
+                                <x-forms.label fieldId="selectStaffAssignee" fieldRequired="true"
+                                    :fieldLabel="__('app.assign').' '.__('app.employee')">
+                                </x-forms.label>
+                                <x-forms.input-group>
+                                    <select class="form-control multiple-users" multiple name="employee_id[]"
+                                        id="selectStaffAssignee2" data-live-search="true" data-size="8">
+                                        @foreach ($employees as $item)
+                                            <x-user-option :user="$item" :pill="true"/>
+                                        @endforeach
+                                    </select>
+                                </x-forms.input-group>
+                                <x-forms.label fieldId="selectClientAssignee" fieldRequired="true"
+                                    :fieldLabel="__('app.assign').' '.__('app.client')" class="mt-3">
+                                </x-forms.label>
+                                <x-forms.input-group>
+                                    <select class="form-control multiple-users" multiple name="client_id[]"
+                                        id="selectClientAssignee2" data-live-search="true" data-size="8">
+                                        @foreach ($clients as $item)
+                                            <x-user-option :user="$item" :pill="true"/>
+                                        @endforeach
+                                    </select>
+                                </x-forms.input-group>
                             </div>
                         </div>
                     </div>
@@ -54,6 +76,17 @@
 </div>
 <script>
     $(document).ready(function () {
+
+        $("#selectClientAssignee, #selectClientAssignee2, #selectStaffAssignee, #selectStaffAssignee2").selectpicker({
+            actionsBox: true,
+            selectAllText: "{{ __('modules.permission.selectAll') }}",
+            deselectAllText: "{{ __('modules.permission.deselectAll') }}",
+            multipleSeparator: " ",
+            selectedTextFormat: "count > 8",
+            countSelectedText: function(selected, total) {
+                return selected + " {{ __('app.membersSelected') }} ";
+            }
+        });
         
         $('#save-more-resource-center').click(function () {
             const iconHtml = $('#iconhtml').val();

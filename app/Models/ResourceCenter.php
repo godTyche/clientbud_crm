@@ -9,5 +9,5 @@ class ResourceCenter extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'url', 'icon', 'colour', 'addedBy'];
+    protected $fillable = ['title', 'url', 'icon', 'colour', 'addedBy', 'clients', 'employees'];
 }

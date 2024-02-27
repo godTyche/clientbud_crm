@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\Reply;
 use App\Models\ResourceCenter;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ResourceCenterController extends AccountBaseController
@@ -22,6 +23,7 @@ class ResourceCenterController extends AccountBaseController
     {
         //
         $this->resourceCenters = ResourceCenter::orderBy('id', 'desc')->get();
+
         return view('resource-center.index', $this->data);
     }
 
@@ -32,6 +34,8 @@ class ResourceCenterController extends AccountBaseController
     {
         //
         $this->pageTitle = __('modules.resourceCenter.addResource');
+        $this->clients = User::allClients();
+        $this->employees = User::allEmployees();
 
         // $this->addPermission = user()->permission('add_product');
         // abort_403(!in_array($this->addPermission, ['all', 'added']));
@@ -59,6 +63,8 @@ class ResourceCenterController extends AccountBaseController
         $resourceCenter->icon = $request->icon;
         $resourceCenter->colour = $request->colour;
         $resourceCenter->addedBy = user()->id;
+        $resourceCenter->employees = implode(',', $request->employee_id);
+        $resourceCenter->clients = implode(',', $request->client_id);
         $resourceCenter->save();
 
         $redirectUrl = urldecode($request->redirect_url);
@@ -94,6 +100,9 @@ class ResourceCenterController extends AccountBaseController
 
         $this->pageTitle = __('modules.resourceCenter.editResource');
 
+        $this->clients = User::allClients();
+        $this->employees = User::allEmployees();
+
         
         if (request()->ajax()) {
             $html = view('resource-center.ajax.edit', $this->data)->render();
@@ -118,6 +127,12 @@ class ResourceCenterController extends AccountBaseController
         $resourceCenter->icon = $request->icon;
         $resourceCenter->colour = $request->colour;
         $resourceCenter->addedBy = user()->id;
+        if($request->employee_id) {
+            $resourceCenter->employees = implode(',', $request->employee_id);
+        }
+        if($request->client_id) {
+            $resourceCenter->clients = implode(',', $request->client_id);
+        }
         $resourceCenter->save();
 
         $redirectUrl = urldecode($request->redirect_url);

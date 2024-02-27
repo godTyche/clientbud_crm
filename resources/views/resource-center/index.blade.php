@@ -51,9 +51,15 @@ $addOrderPermission = user()->permission('add_order');
         </div>
         <div class="row p-20">
             @foreach ($resourceCenters as $item)
-                <div class="col-xl-3 col-md-4">
-                    <x-cards.resource-card :resourceCard="$item" />
-                </div>
+                <?php 
+                    $employeesAssignee = explode(',', $item->employees);
+                    $clientsAssignee = explode(',', $item->clients);
+                ?>
+                @if(in_array('admin', user()->roles->pluck('name')->toArray()) || in_array(user()->id, $employeesAssignee) || in_array(user()->id, $clientsAssignee))
+                    <div class="col-xl-3 col-md-4">
+                        <x-cards.resource-card :resourceCard="$item" />
+                    </div>
+                @endif
             @endforeach
         </div>
 

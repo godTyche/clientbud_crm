@@ -1218,5 +1218,6 @@ return array(
     ),
     'sku' => 'SKU',
     'taxName' => 'Tax Name',
+    'assign' => 'Assign',
 );
 
