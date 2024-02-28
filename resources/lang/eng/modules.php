@@ -1797,7 +1797,7 @@ return array(
         'details' => 'Address Details',
         'name' => 'Name',
         'line1' => 'Address Line',
-        'postalCode' => 'Postal code',
+        'postalCode' => 'Zip code',
         'city' => 'City',
         'state' => 'State',
         'country' => 'Country',
