@@ -414,25 +414,26 @@ class LeadContactController extends AccountBaseController
     public function importLead()
     {
         $this->pageTitle = __('app.importExcel') . ' ' . __('app.menu.lead');
-
+        
         $this->addPermission = user()->permission('add_lead');
         abort_403(!in_array($this->addPermission, ['all', 'added']));
-
+        
         if (request()->ajax()) {
             $html = view('leads.ajax.import', $this->data)->render();
-
+            
             return Reply::dataOnly(['status' => 'success', 'html' => $html, 'title' => $this->pageTitle]);
         }
-
+        
         $this->view = 'leads.ajax.import';
-
+        
         return view('leads.create', $this->data);
     }
-
+    
     public function importStore(ImportRequest $request)
     {
         $this->importFileProcess($request, LeadImport::class);
-
+        $this->clients = User::allClients();
+        
         $view = view('leads.ajax.import_progress', $this->data)->render();
 
         return Reply::successWithData(__('messages.importUploadSuccess'), ['view' => $view]);

@@ -125,6 +125,19 @@
                 <div class="col-md-12">
                 </div>
             </div>
+            <div class="col-md-4">
+                <x-forms.label fieldId="selectClientAssignee" fieldRequired="true"
+                    :fieldLabel="__('app.assign').' to '.__('app.client') . 's'" class="mt-3">
+                </x-forms.label>
+                <x-forms.input-group>
+                    <select class="form-control multiple-users" multiple name="client_id[]"
+                        id="selectClientAssignee2" data-live-search="true" data-size="8">
+                        @foreach ($clients as $item)
+                            <x-user-option :user="$item" :pill="true"/>
+                        @endforeach
+                    </select>
+                </x-forms.input-group>
+            </div>
             <x-form-actions>
                 <x-forms.button-primary id="process-{{ $importClassName }}-form" disabled class="mr-3" icon="check">@lang('app.submit')
                 </x-forms.button-primary>
@@ -163,6 +176,18 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 <script type="text/javascript">
+
+    
+    $("#selectClientAssignee, #selectClientAssignee2").selectpicker({
+        actionsBox: true,
+        selectAllText: "{{ __('modules.permission.selectAll') }}",
+        deselectAllText: "{{ __('modules.permission.deselectAll') }}",
+        multipleSeparator: " ",
+        selectedTextFormat: "count > 8",
+        countSelectedText: function(selected, total) {
+            return selected + " {{ __('app.membersSelected') }} ";
+        }
+    });
 
     $('.select-picker').selectpicker();
         // Current column being edited

@@ -71,10 +71,8 @@ trait ImportExcel
         $jobs = [];
 
         foreach ($excelData as $row) {
-
-            $jobs[] = (new $importJobClass($row, $columns, company()));
+            $jobs[] = (new $importJobClass($row, $columns, company(), $request->client_id));
         }
-
         $batch = Bus::batch($jobs)->onConnection('database')->onQueue($importClassName)->name($importClassName)->dispatch();
 
         Files::deleteFile($request->file, Files::IMPORT_FOLDER);

@@ -25,17 +25,19 @@ class ImportLeadJob implements ShouldQueue
     private $row;
     private $columns;
     private $company;
+    private $client_id;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($row, $columns, $company = null)
+    public function __construct($row, $columns, $company = null, $client_id)
     {
         $this->row = $row;
         $this->columns = $columns;
         $this->company = $company;
+        $this->client_id = $client_id;
     }
 
     /**
@@ -70,6 +72,11 @@ class ImportLeadJob implements ShouldQueue
                     $leadSource = LeadSource::where('type', $this->getColumnValue('source'))->where('company_id', $this->company?->id)->first();
                 }
 
+                $clients = '';
+
+                if($this->client_id)
+                    $clients = implode(',', $this->client_id);
+
                 $lead = new Lead();
                 $lead->company_id = $this->company?->id;
                 $lead->client_name = $this->getColumnValue('name');
@@ -86,6 +93,7 @@ class ImportLeadJob implements ShouldQueue
                 $lead->address = $this->isColumnExists('address') ? $this->getColumnValue('address') : null;
                 $lead->source_id = $leadSource?->id;
                 $lead->created_at = $this->isColumnExists('created_at') ? Carbon::parse($this->getColumnValue('created_at')) : now();
+                $lead->clients = $clients;
                 $lead->save();
 
                 // Log search
