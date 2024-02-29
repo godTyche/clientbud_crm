@@ -15,12 +15,12 @@
         @endphp
 
 @endswitch
-<div class="card sticky-note border" style="margin: 5px; border-radius: 24px; position: relative;">
+<div class="card resource-card sticky-note border" style="margin: 5px; border-radius: 24px; position: relative;">
     <div class="card-body text-justify text-wrap" style="padding: 0;">
         <div class="row" style=" margin: 0;">
 
             <div class="col-12" style="text-align:center; padding:0">
-                <h4 style="background: #ff8851; color: white; border-radius: 24px 24px 0 0; line-height: 36px; margin-bottom: 1rem">{{$resourceCard->title}}</h4>
+                <h4 class="resource-card-header" style="border-radius: 24px 24px 0 0; line-height: 36px; margin-bottom: 1rem">{{$resourceCard->title}}</h4>
                 <a href="{{$resourceCard->url}}" target="_blank">{!! nl2br(urldecode($resourceCard->icon)) !!}</a>
             </div>
             

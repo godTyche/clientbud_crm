@@ -19458,4 +19458,18 @@ body.dark-theme .card-body::-webkit-scrollbar-thumb {
   border: 3px solid #262f3a;
 }
 
+.resource-card-header {
+  background-color: #171f29 ;
+  color: white;
+}
+
+.dark-theme .resource-card-header {
+  background-color: #ffffff ;
+  color: black;
+}
+
+.dark-theme .resource-card .fa-ellipsis-h {
+  color: black!important;
+}
+
 /*# sourceMappingURL=main.css.map*/
