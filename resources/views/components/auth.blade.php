@@ -74,7 +74,7 @@
                                 <a href="javascript:;" class="text-dark-grey my-2 change-lang"  style="color:white"
                                    data-lang="{{$language->language_code}}">
                                     <span
-                                        class='flag-icon flag-icon-{{ ($language->flag_code == 'en') ? 'gb' : $language->flag_code }} flag-icon-squared'></span>
+                                        class='flag-icon flag-icon-{{ ($language->flag_code == 'en') ? 'us' : $language->flag_code }} flag-icon-squared'></span>
                                     {{\App\Models\LanguageSetting::LANGUAGES_TRANS[$language->language_code] ?? $language->language_name}}
                                 </a>
                             </span>
