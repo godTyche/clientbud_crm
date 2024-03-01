@@ -66,6 +66,11 @@ $addOrderPermission = user()->permission('add_order');
     </div>
     <!-- CONTENT WRAPPER END -->
 
+    <a class="btn btn-primary rounded f-14 p-2 mr-3 float-left back" style="display:none;position:absolute;">
+        Back
+    </a>
+    <iframe src="" style="width: 100%; height: 100vh; display: none">
+    </iframe>
 @endsection
 
 @push('scripts')
@@ -73,6 +78,21 @@ $addOrderPermission = user()->permission('add_order');
         const showTable = () => {
             window.LaravelDataTables["email-marketing-table"].draw(false);
         }
+
+        $('.back').click(function() {
+            $('.content-wrapper').show();
+            $('iframe').hide();
+            $('.back').hide();
+        })
+
+        $('.resource-link').click(function(e) {
+            e.preventDefault();
+            link = $(this).attr('href');
+            $('iframe').attr('src', link);
+            $('.content-wrapper').hide();
+            $('iframe').show();
+            $('.back').show();
+        });
 
         $('body').on('click', '.delete-resource', function() {
             var id = $(this).data('resource-id');

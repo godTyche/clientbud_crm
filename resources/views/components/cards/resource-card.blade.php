@@ -21,7 +21,7 @@
 
             <div class="col-12" style="text-align:center; padding:0">
                 <h4 class="resource-card-header" style="border-radius: 24px 24px 0 0; line-height: 36px; margin-bottom: 1rem">{{$resourceCard->title}}</h4>
-                <a href="{{$resourceCard->url}}" target="_blank">{!! nl2br(urldecode($resourceCard->icon)) !!}</a>
+                <a href="{{$resourceCard->url}}" class="resource-link">{!! nl2br(urldecode($resourceCard->icon)) !!}</a>
             </div>
             
         </div>
