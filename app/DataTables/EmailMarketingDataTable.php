@@ -78,7 +78,7 @@ class EmailMarketingDataTable extends BaseDataTable
             return 'row-' . $row->id;
         });
 
-        $datatables->rawColumns(array_merge(['action', 'price', 'allow_purchase', 'check', 'name', 'default_image']));
+        $datatables->rawColumns(array_merge(['action', 'price', 'allow_purchase', 'check', 'default_image']));
 
         return $datatables;
     }
@@ -91,8 +91,11 @@ class EmailMarketingDataTable extends BaseDataTable
     {
         $request = $this->request();
 
-        $model = $model->select('id', 'title', 'content', 'addedBy');
+        $model = $model->select('email_marketings.id', 'title', 'content', 'users.name')->leftJoin('users', 'users.id', 'email_marketings.addedBy');
 
+        if(!in_array('admin', user()->roles->pluck('name')->toArray())) {
+            $model = $model->where('email_marketings.addedBy', user()->id);
+        }
 
         return $model;
     }
@@ -143,7 +146,7 @@ class EmailMarketingDataTable extends BaseDataTable
             '#' => ['data' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false, 'visible' => false, 'title' => '#'],
             __('app.id') => ['data' => 'id', 'name' => 'id', 'title' => __('app.id'), 'visible' => true],
             __('app.title') => ['data' => 'title', 'name' => 'title', 'title' => __('app.title') ],
-            __('app.addedBy') => ['data' => 'addedBy', 'name' => 'addedBy', 'title' => __('app.addedBy') ],
+            __('app.addedBy') => ['data' => 'name', 'name' => 'addedBy', 'title' => __('app.addedBy') ],
         ];
 
         $action = [

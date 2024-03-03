@@ -532,6 +532,11 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         return $this->hasMany(ProjectTimeLog::class, 'user_id');
     }
 
+    public function emailTemplates(): HasMany
+    {
+        return $this->hasMany(EmailMarketing::class, 'addedBy');
+    }
+
     public static function allClients($exceptId = null, $active = false, $overRidePermission = null, $companyId = null)
     {
         if (!isRunningInConsoleOrSeeding() && !is_null($overRidePermission)) {

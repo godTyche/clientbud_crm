@@ -1,7 +1,7 @@
  <div class="col-lg-12 col-md-12 ntfcn-tab-content-left w-100 p-4 ">
     <div class="row">
 
-        <div class="col-lg-3">
+        <!-- <div class="col-lg-3">
             <x-forms.select fieldId="date_format" :fieldLabel="__('modules.accountSettings.dateFormat')"
                             fieldName="date_format" search="true">
                 @foreach ($dateFormat as $format)
@@ -11,7 +11,7 @@
                     </option>
                 @endforeach
             </x-forms.select>
-        </div>
+        </div> -->
         <div class="col-lg-3">
             <x-forms.select fieldId="time_format" :fieldLabel="__('modules.accountSettings.timeFormat')"
                             fieldName="time_format" search="true">
