@@ -244,7 +244,7 @@ class LanguageSetting extends BaseModel
 
     public function getLabelAttribute()
     {
-        $langCode = ($this->language_code == 'en') ? 'gb' : strtolower($this->flag_code);
+        $langCode = ($this->language_code == 'en') ? 'us' : strtolower($this->flag_code);
 
         return ' <span  data-toggle="tooltip" data-original-title="' . $this->language_name . '" class="flag-icon flag-icon-' . $langCode . ' flag-icon-squared"></span>';
     }

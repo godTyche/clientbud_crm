@@ -26,7 +26,7 @@ $changeEmployeeRolePermission = user()->permission('change_employee_role');
                                     fieldRequired="true" :fieldPlaceholder="__('modules.employees.employeeIdInfo')" :popover="__('modules.employees.employeeIdHelp')">
                                 </x-forms.text>
                             </div>
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                 <x-forms.select fieldId="salutation" fieldName="salutation"
                                     :fieldLabel="__('modules.client.salutation')">
                                     <option value="">--</option>
@@ -34,7 +34,7 @@ $changeEmployeeRolePermission = user()->permission('change_employee_role');
                                         <option value="{{ $salutation->value }}" @selected($employee->salutation == $salutation)>{{ $salutation->label() }}</option>
                                     @endforeach
                                 </x-forms.select>
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                                 <x-forms.text fieldId="name" :fieldLabel="__('modules.employees.employeeName')"
                                     fieldName="name" :fieldValue="$employee->name" fieldRequired="true"

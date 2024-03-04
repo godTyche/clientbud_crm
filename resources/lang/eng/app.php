@@ -29,7 +29,7 @@ return array(
     'password' => 'Password',
     'confirmPassword' => 'Confirm Password',
     'phone' => 'Phone',
-    'mobile' => 'Mobile',
+    'mobile' => 'Phone number',
     'createdAt' => 'Created',
     'addedBy' => 'Added By',
     'action' => 'Action',

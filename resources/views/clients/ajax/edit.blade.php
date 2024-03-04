@@ -13,7 +13,7 @@ $addClientSubCategoryPermission = user()->permission('manage_client_subcategory'
                 <div class="row p-20">
                     <div class="col-lg-9">
                         <div class="row">
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <x-forms.select fieldId="salutation" fieldName="salutation"
                                     :fieldLabel="__('modules.client.salutation')">
                                     <option value="">--</option>
@@ -21,7 +21,7 @@ $addClientSubCategoryPermission = user()->permission('manage_client_subcategory'
                                         <option value="{{ $salutation->value }}" @selected($client->salutation == $salutation)>{{ $salutation->label() }}</option>
                                     @endforeach
                                 </x-forms.select>
-                            </div>
+                            </div> -->
                             <div class="col-lg-4 col-md-6">
                                 <x-forms.text fieldId="name" :fieldLabel="__('modules.client.clientName')" fieldName="name"
                                     fieldRequired="true" :fieldPlaceholder="__('placeholders.name')"

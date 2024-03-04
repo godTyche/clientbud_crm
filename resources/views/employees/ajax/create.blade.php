@@ -20,7 +20,7 @@ $addDesignationPermission = user()->permission('add_designation');
                                     :fieldPlaceholder="__('modules.employees.employeeIdInfo')" :popover="__('modules.employees.employeeIdHelp')">
                                 </x-forms.text>
                             </div>
-                            <div class="col-lg-2 col-md-3">
+                            <!-- <div class="col-lg-2 col-md-3">
                                 <x-forms.select fieldId="salutation" fieldName="salutation"
                                     :fieldLabel="__('modules.client.salutation')">
                                     <option value="">--</option>
@@ -28,7 +28,7 @@ $addDesignationPermission = user()->permission('add_designation');
                                         <option value="{{ $salutation->value }}">{{ $salutation->label() }}</option>
                                     @endforeach
                                 </x-forms.select>
-                            </div>
+                            </div> -->
                             <div class="col-lg-4 col-md-6">
                                 <x-forms.text fieldId="name" :fieldLabel="__('modules.employees.employeeName')"
                                     fieldName="name" fieldRequired="true" :fieldPlaceholder="__('placeholders.name')">
@@ -110,7 +110,7 @@ $addDesignationPermission = user()->permission('add_designation');
                             @foreach ($countries as $item)
                                 <option data-tokens="{{ $item->iso3 }}" data-phonecode = "{{$item->phonecode}}"
                                     data-content="<span class='flag-icon flag-icon-{{ strtolower($item->iso) }} flag-icon-squared'></span> {{ $item->nicename }}"
-                                    value="{{ $item->id }}">{{ $item->nicename }}</option>
+                                    value="{{ $item->id }}" @selected($item->nicename == 'United States')>{{ $item->nicename }}</option>
                             @endforeach
                         </x-forms.select>
                     </div>
@@ -126,7 +126,7 @@ $addDesignationPermission = user()->permission('add_designation');
                                 @foreach ($countries as $item)
                                     <option data-tokens="{{ $item->name }}"
                                             data-content="{{$item->flagSpanCountryCode()}}"
-                                            value="{{ $item->phonecode }}">{{ $item->phonecode }}
+                                            value="{{ $item->phonecode }}" @selected($item->nicename == 'United States')>{{ $item->phonecode }}
                                     </option>
                                 @endforeach
                             </x-forms.select>
@@ -166,7 +166,7 @@ $addDesignationPermission = user()->permission('add_designation');
                             fieldName="locale" search="true">
                             @foreach ($languages as $language)
                                 <option {{ user()->locale == $language->language_code ? 'selected' : '' }}
-                                data-content="<span class='flag-icon flag-icon-{{ ($language->flag_code == 'en') ? 'gb' : $language->flag_code }} flag-icon-squared'></span> {{ $language->language_name }}"
+                                data-content="<span class='flag-icon flag-icon-{{ ($language->flag_code == 'en') ? 'us' : $language->flag_code }} flag-icon-squared'></span> {{ $language->language_name }}"
                                 value="{{ $language->language_code }}">{{ $language->language_name }}</option>
                             @endforeach
                         </x-forms.select>

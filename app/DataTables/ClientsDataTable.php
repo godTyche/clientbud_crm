@@ -214,7 +214,7 @@ class ClientsDataTable extends BaseDataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return \Yajra\DataTables\Html\Builder`
      */
     public function html()
     {
@@ -229,7 +229,7 @@ class ClientsDataTable extends BaseDataTable
                 }',
             ]);
 
-        if (canDataTableExport()) {
+        if (canDataTableExport() && in_array('admin', user_roles())) {
             $dataTable->buttons(Button::make(['extend' => 'excel', 'text' => '<i class="fa fa-file-export"></i> ' . trans('app.exportExcel')]));
         }
 

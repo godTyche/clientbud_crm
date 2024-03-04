@@ -21,7 +21,7 @@ $addPermission = user()->permission('add_clients');
                 <div class="row p-20">
                     <div class="col-lg-9">
                         <div class="row">
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <x-forms.select fieldId="salutation" fieldName="salutation"
                                     :fieldLabel="__('modules.client.salutation')">
                                     <option value="">--</option>
@@ -29,7 +29,7 @@ $addPermission = user()->permission('add_clients');
                                         <option value="{{ $salutation->value }}" @selected(isset($lead) && $salutation == $lead->salutation)>{{ $salutation->label() }}</option>
                                     @endforeach
                                 </x-forms.select>
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                                 <x-forms.text fieldId="name" :fieldLabel="__('modules.client.clientName')" fieldName="name"
                                     fieldRequired="true" :fieldPlaceholder="__('placeholders.name')"

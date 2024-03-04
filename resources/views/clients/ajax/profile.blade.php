@@ -131,12 +131,12 @@
                 </p>
             </div>
 
-            <x-cards.data-row :label="__('modules.client.officePhoneNumber')"
+            <!-- <x-cards.data-row :label="__('modules.client.officePhoneNumber')"
                 :value="$client->clientDetails->office ?? '--'" />
 
             <x-cards.data-row :label="__('modules.client.website')" :value="$client->clientDetails->website ?? '--'" />
 
-            <x-cards.data-row :label="__('app.gstNumber')" :value="$client->clientDetails->gst_number ?? '--'" />
+            <x-cards.data-row :label="__('app.gstNumber')" :value="$client->clientDetails->gst_number ?? '--'" /> -->
 
             <x-cards.data-row :label="__('app.address')" :value="$client->clientDetails->address ?? '--'" />
 
