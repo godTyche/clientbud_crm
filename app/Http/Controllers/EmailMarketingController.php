@@ -24,10 +24,11 @@ class EmailMarketingController extends AccountBaseController
     /**
      * Display a listing of the resource.
      */
-    public function index(EmailMarketingDataTable $dataTable)
+    public function index()
     {
         //
-        return $dataTable->render('email-marketing.index', $this->data);
+        // return $dataTable->render('email-marketing.index', $this->data);
+        return view('email-marketing.index', $this->data);
 
     }
 
