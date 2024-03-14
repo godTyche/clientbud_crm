@@ -84,7 +84,14 @@ $addClientSubCategoryPermission = user()->permission('manage_client_subcategory'
                                 <input type="tel" class="form-control height-35 f-14" placeholder="@lang('placeholders.mobile')"
                                     name="mobile" id="mobile" value="{{ $client->mobile }}">
                             </x-forms.input-group>
-                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <x-forms.select fieldId="role" :fieldLabel="__('app.role')" fieldName="role">
+                                @foreach ($roles as $role)
+                                    <option {{ (in_array($role->name, $userRoles)) ? 'selected' : '' }} value="{{ $role->id }}">{{ $role->display_name }}</option>
+                                @endforeach
+                            </x-forms.select>
+                        </div>
                         </div>
                     </div>
                     <div class="col-lg-3">

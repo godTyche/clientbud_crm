@@ -34,7 +34,7 @@
     @endif
 
     <!-- NAV ITEM - HR COLLAPASE MENU -->
-    @if (!in_array('client', user_roles()) && (in_array('leads', user_modules())) && (($sidebarUserPermissions['view_lead'] != 5 && $sidebarUserPermissions['view_lead'] != 'none') || ($sidebarUserPermissions['view_deals'] != 5 && $sidebarUserPermissions['view_deals'] != 'none')))
+    @if ((in_array('leads', user_modules())) && (($sidebarUserPermissions['view_lead'] != 5 && $sidebarUserPermissions['view_lead'] != 'none') || ($sidebarUserPermissions['view_deals'] != 5 && $sidebarUserPermissions['view_deals'] != 'none')))
         <x-menu-item icon="person" :text="__('app.menu.lead')">
             <x-slot name="iconPath">
                 <path
@@ -52,9 +52,7 @@
             @endif
         </x-menu-item>
     @endif
-
-
-    @if (!in_array('client', user_roles()) && in_array('clients', user_modules()) && $sidebarUserPermissions['view_clients'] != 5 && $sidebarUserPermissions['view_clients'] != 'none')
+    @if (in_array('clients', user_modules()) && $sidebarUserPermissions['view_clients'] != 5 && $sidebarUserPermissions['view_clients'] != 'none')
         <x-menu-item icon="building" :text="__('app.menu.clients')" :link="route('clients.index')">
             <x-slot name="iconPath">
                 <path fill-rule="evenodd"
@@ -66,7 +64,7 @@
     @endif
 
 <!-- NAV ITEM - HR COLLAPASE MENU -->
-    @if (!in_array('client', user_roles()) && (in_array('employees', user_modules()) || in_array('leaves', user_modules()) || in_array('attendance', user_modules()) || in_array('holidays', user_modules())) && ($sidebarUserPermissions['view_employees'] != 5 || $sidebarUserPermissions['view_leave'] != 5 || $sidebarUserPermissions['view_attendance'] != 5 || $sidebarUserPermissions['view_holiday'] != 5) && ($sidebarUserPermissions['view_employees'] != 'none' || $sidebarUserPermissions['view_leave'] != 'none' || $sidebarUserPermissions['view_attendance'] != 'none' || $sidebarUserPermissions['view_holiday'] != 'none' || $sidebarUserPermissions['view_shift_roster'] != 'none'))
+    @if ((in_array('employees', user_modules()) || in_array('leaves', user_modules()) || in_array('attendance', user_modules()) || in_array('holidays', user_modules())) && ($sidebarUserPermissions['view_employees'] != 5 || $sidebarUserPermissions['view_leave'] != 5 || $sidebarUserPermissions['view_attendance'] != 5 || $sidebarUserPermissions['view_holiday'] != 5) && ($sidebarUserPermissions['view_employees'] != 'none' || $sidebarUserPermissions['view_leave'] != 'none' || $sidebarUserPermissions['view_attendance'] != 'none' || $sidebarUserPermissions['view_holiday'] != 'none' || $sidebarUserPermissions['view_shift_roster'] != 'none'))
         <x-menu-item icon="people" :text="__('app.menu.hr')">
             <x-slot name="iconPath">
                 <path

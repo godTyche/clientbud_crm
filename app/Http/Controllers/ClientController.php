@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Deal;
 use App\Models\ProjectStatusSetting;
 use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\User;
 use App\Helper\Files;
 use App\Helper\Reply;
@@ -119,6 +120,10 @@ class ClientController extends AccountBaseController
         $this->salutations = Salutation::cases();
         $this->languages = LanguageSetting::where('status', 'enabled')->get();
 
+        $userRoles = user()->roles->pluck('name')->toArray();
+
+        $this->roles = Role::whereNotIn('name', ['admin', 'employee'])->get();
+
         $client = new ClientDetails();
 
         if ($client->getCustomFieldGroupsWithFields()) {
@@ -191,10 +196,20 @@ class ClientController extends AccountBaseController
             $client->updateCustomFieldData($request->custom_fields_data);
         }
 
-        $role = Role::where('name', 'client')->select('id')->first();
-        $user->attachRole($role->id);
+        // $role = Role::where('name', 'client')->select('id')->first();
+        // $user->attachRole($role->id);
 
-        $user->assignUserRolePermission($role->id);
+        // $user->assignUserRolePermission($role->id);
+
+        $employeeRole = Role::where('name', 'client')->first();
+        $user->attachRole($employeeRole);
+
+        if ($employeeRole->id != $request->role) {
+            $otherRole = Role::where('id', $request->role)->first();
+            $user->attachRole($otherRole);
+        }
+
+        $user->assignUserRolePermission($request->role);
 
         // Log search
         $this->logSearchEntry($user->id, $user->name, 'clients.show', 'client');
@@ -283,6 +298,8 @@ class ClientController extends AccountBaseController
         $this->pageTitle = __('app.update') . ' ' . __('app.client');
         $this->salutations = Salutation::cases();
         $this->languages = LanguageSetting::where('status', 'enabled')->get();
+        $this->roles = Role::whereNotIn('name', ['admin', 'employee'])->get();
+        $this->userRoles = $this->client->roles->pluck('name')->toArray();
 
         if (!is_null($this->client->clientDetails)) {
             $this->clientDetail = $this->client->clientDetails->withCustomFields();
@@ -347,6 +364,29 @@ class ClientController extends AccountBaseController
 
 
         $user->update($data);
+
+        $roleId = request()->role;
+
+        $userRole = Role::where('id', request()->role)->first();
+
+        if ($roleId != '' && $userRole->name != $user->user_other_role) {
+
+            $clientRole = Role::where('name', 'client')->first();
+
+            $user = User::withoutGlobalScope(ActiveScope::class)->findOrFail($user->id);
+
+            RoleUser::where('user_id', $user->id)->delete();
+            $user->roles()->attach($clientRole->id);
+
+            if ($clientRole->id != $roleId) {
+                $user->roles()->attach($roleId);
+            }
+
+            $user->assignUserRolePermission($roleId);
+
+            $userSession = new AppSettingController();
+            $userSession->deleteSessions([$user->id]);
+        }
 
         if ($user->clientDetails) {
             $data['category_id'] = $request->category_id;
