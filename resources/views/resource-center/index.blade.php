@@ -5,8 +5,7 @@
 @endsection
 
 @php
-$addProductPermission = user()->permission('add_product');
-$addOrderPermission = user()->permission('add_order');
+$addResourcePermission = user()->permission('add_resourcecenter');
 @endphp
 
 @section('content')
@@ -16,12 +15,12 @@ $addOrderPermission = user()->permission('add_order');
         {{-- <input type="hidden" name="user_id" class="user_id" value={{user()->id}}> --}}
         <div class="d-flex justify-content-between action-bar">
             <div id="table-actions" class="flex-grow-1 align-items-center">
-                <!-- @if ($addProductPermission == 'all' || $addProductPermission == 'added') -->
+                @if(in_array('admin', user_roles()) || $addResourcePermission == 'all')
                     <x-forms.link-primary :link="route('resource-center.create')" class="mr-3 openRightModal float-left"
                         icon="plus">
                         @lang('modules.resourceCenter.addResource')
                     </x-forms.link-primary>
-                <!-- @endif -->
+                @endif
             </div>
             <div id="emptyCartBox">
                 <a href="javascript:;" class="f-20 mt-2 text-lightest d-flex align-items-center mr-3 empty-cart fa fa-trash" data-user-id = {{ user()->id }} data-toggle="tooltip" data-original-title="@lang('app.emptyCart')" ><i

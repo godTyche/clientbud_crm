@@ -37,8 +37,8 @@ class ResourceCenterController extends AccountBaseController
         $this->clients = User::allClients();
         $this->employees = User::allEmployees();
 
-        // $this->addPermission = user()->permission('add_product');
-        // abort_403(!in_array($this->addPermission, ['all', 'added']));
+        $this->addPermission = user()->permission('add_resourcecenter');
+        abort_403(!in_array($this->addPermission, ['all', 'added']) && !in_array('admin', user_roles()));
 
         if (request()->ajax()) {
             $html = view('resource-center.ajax.create', $this->data)->render();
@@ -100,6 +100,9 @@ class ResourceCenterController extends AccountBaseController
     public function edit(string $id)
     {
         //
+        $this->addPermission = user()->permission('edit_resourcecenter');
+        abort_403(!in_array($this->addPermission, ['all', 'added']) && !in_array('admin', user_roles()));
+
         $this->resourceCenter = ResourceCenter::findOrFail($id);
 
         $this->pageTitle = __('modules.resourceCenter.editResource');
@@ -150,6 +153,9 @@ class ResourceCenterController extends AccountBaseController
     public function destroy(string $id)
     {
         //
+        $this->addPermission = user()->permission('delete_resourcecenter');
+        abort_403(!in_array($this->addPermission, ['all', 'added'])  && !in_array('admin', user_roles()));
+
         $resourceCenter = ResourceCenter::findOrFail($id);
 
         $resourceCenter->delete();

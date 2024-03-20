@@ -904,7 +904,6 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
 
             return $permissionType ? $permissionType->name : false;
         });
-
     }
 
     public function permissionTypeId($permission)

@@ -1695,6 +1695,8 @@ return array(
         'deals' => 'Deals',
         'qrcode' => 'QR Code',
         'cybersecurity' => 'Cyber Security',
+        'emailmarketing' => 'Email Marketing',
+        'resourcecenter' => 'Resource Center',
     ),
     'projectSettings' => array(
         'sendNotificationsTo' => 'Send Reminder To',

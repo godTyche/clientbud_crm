@@ -1,6 +1,5 @@
 @php
-    $addProductCategoryPermission = user()->permission('manage_product_category');
-    $addProductSubCategoryPermission = user()->permission('manage_product_sub_category');
+    $addPermission = user()->permission('add_resourcecenter');
 @endphp
 
 <link rel="stylesheet" href="{{ asset('vendor/css/dropzone.min.css') }}">

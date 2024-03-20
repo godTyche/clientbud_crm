@@ -15,6 +15,12 @@
         @endphp
 
 @endswitch
+
+@php
+$editResourcePermission = user()->permission('edit_resourcecenter');
+$deleteResourcePermission = user()->permission('delete_resourcecenter');
+@endphp
+
 <div class="card resource-card sticky-note border" style="margin: 5px; border-radius: 24px; position: relative;">
     <div class="card-body text-justify text-wrap" style="padding: 0;">
         <div class="row" style=" margin: 0;">
@@ -37,11 +43,15 @@
             <a class="dropdown-item" target="_blank" 
                 href="{{ $resourceCard->url }}"><i
                     class="fa fa-eye mr-2"></i>@lang('app.view')</a>
+            @if($editResourcePermission == 'all' || $editResourcePermission == 'added' || in_array('admin', user_roles()))
             <a class="openRightModal dropdown-item"
                 href="{{ route('resource-center.edit', $resourceCard->id) }}"><i
                     class="fa fa-edit mr-2"></i>@lang('app.edit')</a>
+            @endif
+            @if($deleteResourcePermission == 'all' || $deleteResourcePermission == 'added' || in_array('admin', user_roles()))
             <a class="dropdown-item delete-resource" data-resource-id="{{ $resourceCard->id }}"
                 href="javascript:;"><i class="fa fa-trash mr-2"></i>@lang('app.delete')</a>
+            @endif
         </div>
     </div>
 
