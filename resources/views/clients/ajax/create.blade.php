@@ -94,6 +94,7 @@ $addPermission = user()->permission('add_clients');
                                         name="mobile" id="mobile" value="{{$lead->mobile ?? ''}}">
                                 </x-forms.input-group>
                             </div>
+                            @if (!in_array('client', user_roles()))
                             <div class="col-md-4">
                                 <x-forms.select fieldId="role" :fieldLabel="__('app.role')" fieldName="role">
                                     @foreach ($roles as $role)
@@ -101,6 +102,7 @@ $addPermission = user()->permission('add_clients');
                                     @endforeach
                                 </x-forms.select>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-lg-3">
@@ -129,6 +131,7 @@ $addPermission = user()->permission('add_clients');
                         </x-forms.select>
                     </div>
 
+                    @if (!in_array('client', user_roles()))
                     <div class="col-md-3">
                         <x-forms.label class="mt-3" fieldId="category"
                             :fieldLabel="__('modules.client.clientCategory')">
@@ -153,7 +156,9 @@ $addPermission = user()->permission('add_clients');
                             @endif
                         </x-forms.input-group>
                     </div>
+                    @endif
 
+                    @if (!in_array('client', user_roles()))
                     <div class="col-md-3">
                         <x-forms.label class="mt-3" fieldId="sub_category_id"
                             :fieldLabel="__('modules.client.clientSubCategory')"></x-forms.label>
@@ -173,7 +178,9 @@ $addPermission = user()->permission('add_clients');
                             @endif
                         </x-forms.input-group>
                     </div>
+                    @endif
 
+                    @if (!in_array('client', user_roles()))
                     <div class="col-md-3">
                         <div class="form-group my-3">
                             <label class="f-14 text-dark-grey mb-12 w-100 mt-3"
@@ -201,6 +208,7 @@ $addPermission = user()->permission('add_clients');
                             </div>
                         </div>
                     </div>
+                    @endif
 
 
                 </div>
